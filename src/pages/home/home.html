@@ -1,14 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>学习新傣文</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <h3>功课</h3>
+  <div id=categories></div>
+  <div *ngFor="let lesson of lessonButtons">
+    <figure class=category (click)="navigateToChooseMode(lesson.lessonName)"><div [innerHTML]="lesson.lessonName"></div>
+    </figure>
+</div>
 </ion-content>

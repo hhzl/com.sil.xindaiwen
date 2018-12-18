@@ -1,0 +1,26 @@
+<!--
+  Generated template for the ChooseModePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>学习新傣文</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+  <div id=chooseButtons>
+    <div>
+      <button ion-button id=learnButton class="optionBtn" name="learn" (click)="navigateToLearnMode(lesson)" style="background: url(assets/imgs/learn.png);"></button>
+    </div>
+    <div>
+      <button ion-button id=practiceButton class="optionBtn" name="practice" (click)="navigateToPracticeMode(lesson)" style="background: url(assets/imgs/practice.png);"></button>
+    </div>
+  </div>
+  </ion-content>
+  

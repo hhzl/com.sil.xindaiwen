@@ -1,5 +1,7 @@
 {
   "name": "com.sil.xindaiwen",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
