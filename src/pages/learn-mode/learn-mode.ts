@@ -42,10 +42,10 @@ export class LearnModePage {
     
     //doesn't work with ionic live-reload https://github.com/ionic-team/ionic-cli/issues/287
     var fileNumber = clickedWord._id;
-    var hasPlayedChar = LWutils.playAudio("/assets/lessonmaterial/audio/" + fileNumber + "-char.mp3");
+    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + fileNumber + "-char.mp3");
 
     hasPlayedChar.addEventListener("ended", function() {
-      var hasPlayedWord = LWutils.playAudio("/assets/lessonmaterial/audio/" + fileNumber + "-word.mp3");
+      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + fileNumber + "-word.mp3");
 
       hasPlayedWord.addEventListener("ended", function() {
         var myButton = document.getElementById(wordID);
@@ -100,7 +100,7 @@ export class LearnModePage {
       if(questionObj != null)
       {
             var card = "<div class=character>" + questionObj.character + "</div>";
-            card += "<img class=imgAnswer src='/assets/lessonmaterial/images/" + questionObj._id + ".png'>";
+            card += "<img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'>";
             card += "<div class=example>" + questionObj.example + "</div>";
 
             this.arrWords.push({id: w.toString(), content: card}); 

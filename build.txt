@@ -1,0 +1,9 @@
+cordova build --release android
+
+cd platforms/android/build/outputs/apk/
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../../../../../my-release-key.keystore android-release-unsigned.apk alias_name
+
+testing12#
+
+/Users/philipperry/Library/Android/sdk/build-tools/28.0.1/zipalign -v 4 android-release-unsigned.apk xindaiwen.apk

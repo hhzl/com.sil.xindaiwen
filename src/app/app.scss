@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'Nokyung';
-  src: url('../fonts/Nokyung-R.ttf');
+  src: url('../assets/fonts/Nokyung-R.ttf');
 }
 body {
     text-align: center;
@@ -96,7 +96,7 @@ body {
     /* padding-top: 5px; */
     height: 5vh;
     font-size: 4vh; 
-    font-family: Nokyung;
+    font-family: 'Nokyung';
   }
 
   .example {
@@ -105,7 +105,7 @@ body {
     margin-left: 50px;
     height: 4vh; 
     font-size: 3vh;
-    font-family: Nokyung;
+    font-family: 'Nokyung';
   }
 
   .imgAnswer {
@@ -141,6 +141,7 @@ body {
   }
   #back, #forward {
     width:50%;
+    margin-top: 10px;
   }
   #back {
     padding-left: 2%;
@@ -152,22 +153,7 @@ body {
     float: left;
     text-align: right;
   }
-  .left {
-      float:left;
-    width: 47%;
-    height: 100%;
-      text-align: center;
-    margin-right: 1%;
-    margin-left: 2%;
-  }
-  .right {
-       overflow:hidden;
-     width: 48%;
-     height: 100%;
-     margin-right: 2%;
-     margin-left: 1%;
-       text-align: center;
-  }
+  
   .backforwardBtn {
     width: 100%;
     height: 100%;
@@ -218,7 +204,7 @@ body {
   }
   .optionCell { 
       margin-bottom: 1%; 
-      height: 40%;
+      height: 48%;
   }
   /*
   .optionRow {
@@ -231,19 +217,22 @@ body {
     height: 35%;
   }
   */
-  @media screen and (orientation:portrait) {
+  @media screen and (orientation:landscape) {
     
+    #optionsForAnswers {
+      height: 80%;
+    }    
      .left {
      float: left;
-      width: 100%;
+      width: 48%;
       max-width: 100%;
-      margin-right: 0px;
+      margin-right: 10px;
       margin-left: 0px;
       margin-bottom: 5px;
     }
     .right {
       float:left;
-      width: 100%;
+      width: 48%;
       max-width: 100%;
       margin-right: 0px;
       margin-left: 0px;
@@ -260,7 +249,7 @@ body {
     }
     */
     .optionCell {
-      height: 54%;
+      height: 90%;
     }
     
     .optionBtn {
