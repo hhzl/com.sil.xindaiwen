@@ -259,7 +259,7 @@ var LWdb = function(name) {
 		loadIntoStorage : function (datatable) {
 
 			var wordlist = new Array();
-			var id = 11;
+			var id = 1;
 			var i;
 			for (i in datatable) {
 				wordlist[i] = {};
@@ -314,6 +314,8 @@ var LWdb = function(name) {
 				var str = localStorage.getItem(keys[i]);
 				words.push(JSON.parse(str));
 			}
+
+			words.sort(function(a,b) {return a._id > b._id;});
 			return words;
 		},
 
