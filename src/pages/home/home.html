@@ -11,7 +11,7 @@
   <h3>功课</h3>
   <div id=categories></div>
   <div *ngFor="let lesson of lessonButtons">
-    <figure class=category (click)="navigateToChooseMode(lesson.lessonName)"><div [innerHTML]="lesson.lessonName"></div>
-    </figure>
+    <button ion-button color="light" class=category (click)="navigateToChooseMode(lesson.lessonName)"><div [innerHTML]="lesson.lessonName"></div>
+    </button>
 </div>
 </ion-content>

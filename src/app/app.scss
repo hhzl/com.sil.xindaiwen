@@ -15,6 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+@font-face {
+  font-family: 'Nokyung';
+  src: url('../fonts/Nokyung-R.ttf');
+}
 body {
     text-align: center;
     padding-top: 1%;
@@ -59,6 +63,7 @@ body {
     height: 200px;
     line-height: 200px;
     margin-bottom: 1%;
+    color: #000000;
     background-color: #FFFFFF;
     border-color: #CCCCCC;
     border-width: 1px;
@@ -88,23 +93,25 @@ body {
 
   .character {
     color: #000000;
-    padding-top: 5px;
-    margin-right: 180px;
-    font-size: 150%;
-    height: 15%;
+    /* padding-top: 5px; */
+    height: 5vh;
+    font-size: 4vh; 
+    font-family: Nokyung;
   }
 
   .example {
     color: #000000;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
     margin-left: 50px;
-    height: 15%;
+    height: 4vh; 
+    font-size: 3vh;
+    font-family: Nokyung;
   }
 
   .imgAnswer {
     width: auto;
     max-width: 100%;
-    height:70%;
+    max-height: 60%;
   }
   .importButton {
     font-size:24px;
@@ -171,7 +178,6 @@ body {
     width: 100%;
     max-width: 400px;
     height: 100%;
-    font-size: 150%;
     background-color: #FFFFFF;
     background-repeat: no-repeat !important;
     background-position: center !important; 

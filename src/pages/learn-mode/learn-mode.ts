@@ -42,7 +42,6 @@ export class LearnModePage {
     
     //doesn't work with ionic live-reload https://github.com/ionic-team/ionic-cli/issues/287
     var fileNumber = parseInt(wordID) + 1;
-    console.log("/assets/lessonmaterial/audio/" + fileNumber + ".mp3");
     var hasPlayedChar = LWutils.playAudio("/assets/lessonmaterial/audio/" + fileNumber + "-char.mp3");
 
     hasPlayedChar.addEventListener("ended", function() {
@@ -85,9 +84,6 @@ export class LearnModePage {
     var arrOptions = lw.getLearnCards(tag);
 
     this.arrWords = [];
-
-    console.log("arrOptions: ");
-    console.log(arrOptions);
 
     if(arrOptions.length <= numberOfOptions)
     {
