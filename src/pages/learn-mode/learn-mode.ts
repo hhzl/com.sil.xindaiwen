@@ -5,7 +5,7 @@ declare var BoxOfQuestions: any;
 declare var LWdb: any;
 declare var LWutils: any;
 var lw = BoxOfQuestions(LWdb('lw-storage'));
-var wordNumber = 1;
+var wordNumber;
 /**
  * Generated class for the LearnModePage page.
  *
@@ -27,6 +27,7 @@ export class LearnModePage {
   }
 
   ionViewDidLoad() {
+    wordNumber = 1;
     console.log('ionViewDidLoad LearnModePage');
     var tag = this.navParams.get('tag');
     this.lessonName = tag;
@@ -99,9 +100,11 @@ export class LearnModePage {
       var questionObj = lw.getWord(w);
       if(questionObj != null)
       {
-            var card = "<div class=character>" + questionObj.character + "</div>";
-            card += "<img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'>";
-            card += "<div class=example>" + questionObj.example + "</div>";
+            var card = "<div class=characterContainer><div class=character>" + questionObj.character + "</div></div>";
+            card += "<div class=example>";
+            card += "<div class=exampleImage><div><img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'></div></div>";
+            card += "<div class=exampleText>" + questionObj.example + "</div>";
+            card += "</div>";
 
             this.arrWords.push({id: w.toString(), content: card}); 
       }

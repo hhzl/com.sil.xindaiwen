@@ -1,5 +1,23 @@
 import { Component } from '@angular/core';
+import { HomePage } from '../home/home';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+declare var BoxOfQuestions: any;
+declare var LWdb: any;
+declare var LWutils: any;
+var lw = BoxOfQuestions(LWdb('lw-storage'));
+var correctAnswer = "";
+var mode = "";
+var questionObj = null;
+var tag = "";
+var wordNumber = 1;
+
+/**
+ * Generated class for the PracticeModePage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage()
 @Component({
@@ -7,4 +25,165 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'practice-mode.html',
 })
 export class PracticeModePage {
+
+  public buttonColor: string = '#FFFFFF';
+
+  arrOptionButtons: any;
+  lessonName: any; 
+  title: string; 
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad PracticeModePage');
+  }
+
+
+  ionViewDidEnter()
+  {
+    console.log("entered PracticeModePage");
+
+    tag = this.navParams.get('tag');
+    mode = this.navParams.get('mode');
+
+    console.log("tag: " + tag);
+    console.log("mode: " + mode);
+
+    this.lessonName = tag;
+    
+    this.title = "练习 '" + tag + "'";
+
+    this.showRepeat(tag, mode);
+  }
+
+  listen() : void
+  {
+    if(questionObj != null)
+    {
+      var fileNumber = questionObj['_id'];
+      LWutils.playAudio("assets/lessonmaterial/audio/" + fileNumber + "-char.mp3");
+    }
+  }
+  optionClick(clickedOption) : void
+  {    
+    if(clickedOption.buttonColor === '#FFFFFF') { 
+      clickedOption.buttonColor = '#FFF0F5'
+    } else {
+      clickedOption.buttonColor = '#FFFFFF'
+    }
+
+    var wordID = clickedOption.currentTarget.id;
+
+    var w = lw.findID(wordID);
+    var clickedWord = lw.getWord(w);
+    var myButton = document.getElementById(wordID);
+
+    var correct = false;
+    if(myButton)
+    {
+      console.log("clicked word: " + clickedWord.translate);
+      if(clickedWord.translate == correctAnswer)
+      {
+          correct = true;
+
+          myButton.classList.add("correct");
+          lw.moveQuestionForward();
+      }
+      else {
+          myButton.classList.add("wrong");
+
+          lw.moveQuestionBackwards();
+      }
+      
+      setTimeout(()=>{  
+        if(correct)
+        {
+          console.log("removeCorrect " + wordID);
+          myButton.classList.remove("correct");
+          this.showRepeat(tag, mode);
+        }
+        else {
+          this.listen();
+          myButton.classList.remove("wrong");
+          myButton.style.opacity = "0.3";
+        }
+      }, 2000);
+    }
+}
+  showRepeat(tag, mode) {
+
+    var wordsFilteredByTag = lw.allWordsFilteredByTag(tag);
+
+    this.arrOptionButtons = [];
+
+    questionObj = lw.question(tag, mode);
+    console.log(tag + "#" + mode);
+    console.log("questionObj: " + questionObj);
+    
+    if(typeof questionObj !== 'undefined')
+    {
+      correctAnswer = lw.answer(tag, mode);
+
+      console.log("correctAnswer");
+      console.log(correctAnswer);
+
+      this.listen();
+
+      var arrOptionButtons = document.getElementsByClassName("optionBtn");
+      var arrOptions = lw.getAnswerOptions(tag, mode);
+
+      var numberOfOptions = 4;
+      if(arrOptions.length < numberOfOptions)
+      {
+        if(wordNumber > 4) {
+          numberOfOptions = arrOptions.length - (wordNumber + 4);
+        }
+        else {
+          numberOfOptions = arrOptions.length;
+        }
+      }      
+      for (var i = 0; i < numberOfOptions; i++) {
+
+        if(arrOptions[i])
+        {
+
+          var card = "<div class=answer><div class=answerText>" + arrOptions[i]['character'] + "</div></div>";
+
+          this.arrOptionButtons.push({id: arrOptions[i]['_id'], content: card}); 
+        }
+      }
+
+    }
+    else
+    {
+      if(mode == "practice")
+      {
+        this.showRepeat(tag, "practiceagain");
+        /*
+        this.navCtrl.push('PracticeModePage', {
+          tag: tag,
+          mode: "practiceagain"
+        });
+        */    
+      }
+      else
+      {
+        var LWarea = document.getElementById("learnWords2-area");
+        LWarea.style.display = "none";
+
+        var finished = document.getElementById("finished");
+        finished.style.display = "table";
+      }
+    }
+
+  }  
+
+  goHome() {
+    this.navCtrl.setRoot(HomePage);
+    /* 
+    Uncaught (in promise): Error Type HomePage is part of the declarations of 2 modules:
+    AppModule and HomePageModule! Please consider moving HomePage to a higher module that imports AppModule
+    */ 
+  }
 }
