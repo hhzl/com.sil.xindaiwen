@@ -11,7 +11,6 @@ var mode = "";
 var questionObj = null;
 var tag = "";
 var wordNumber = 1;
-
 /**
  * Generated class for the PracticeModePage page.
  *
@@ -82,8 +81,8 @@ export class PracticeModePage {
     var correct = false;
     if(myButton)
     {
-      console.log("clicked word: " + clickedWord.translate);
-      if(clickedWord.translate == correctAnswer)
+      console.log("clicked word: " + clickedWord._id);
+      if(clickedWord._id == correctAnswer)
       {
           correct = true;
 
@@ -117,22 +116,22 @@ export class PracticeModePage {
 
     this.arrOptionButtons = [];
 
-    questionObj = lw.question(tag, mode);
+    questionObj = lw.question(tag, mode, false);
+
     console.log(tag + "#" + mode);
-    console.log("questionObj: " + questionObj);
     
     if(typeof questionObj !== 'undefined')
     {
       correctAnswer = lw.answer(tag, mode);
-
-      console.log("correctAnswer");
-      console.log(correctAnswer);
 
       this.listen();
 
       var arrOptionButtons = document.getElementsByClassName("optionBtn");
       var arrOptions = lw.getAnswerOptions(tag, mode);
 
+      console.log("arrOptions:");
+      console.log(arrOptions);
+  
       var numberOfOptions = 4;
       if(arrOptions.length < numberOfOptions)
       {

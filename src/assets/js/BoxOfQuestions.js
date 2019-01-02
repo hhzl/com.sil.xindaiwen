@@ -142,7 +142,7 @@ function BoxOfQuestions(db) {
 
 
 
-		question : function(tag, mode){
+		question : function(tag, mode, random){
 			// gives back a question to ask
 			console.log("question mode: " + mode);
 			if (!_question) {
@@ -160,7 +160,14 @@ function BoxOfQuestions(db) {
 					var wds = this.wordsToReview();
 				}
 
-				if (wds !== null) {_question = this.chooseRandomObject(wds);}
+				if (wds !== null) {
+					if(random == true) {
+						_question = this.chooseRandomObject(wds);
+					}
+					else {
+						_question = wds[0];
+					}
+				}
 			}
 			return _question;
 		},
@@ -174,7 +181,7 @@ function BoxOfQuestions(db) {
 
 		answer :function(tag, mode){
 			console.log("answer mode: " + mode);
-			return (this.question(tag, mode)).translate;
+			return (this.question(tag, mode))._id;
 		},
 
 
