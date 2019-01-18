@@ -315,7 +315,7 @@ var LWdb = function(name) {
 				words.push(JSON.parse(str));
 			}
 
-			words.sort(function(a,b) {return a._id > b._id;});
+			//words.sort(function(a,b) {return a._id > b._id;});
 			return words;
 		},
 

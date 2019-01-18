@@ -30,6 +30,7 @@ export class PracticeModePage {
   public buttonColor: string = '#FFFFFF';
 
   arrOptionButtons: any;
+  arrOptionButtonsSorted: any;
   lessonName: any; 
   title: string; 
 
@@ -54,6 +55,8 @@ export class PracticeModePage {
     this.lessonName = tag;
     
     this.title = "练习 '" + tag + "'";
+
+    lw.resetQueried();
 
     this.showRepeat(tag, mode);
   }
@@ -106,6 +109,9 @@ export class PracticeModePage {
           }
       }
       else {
+          console.log("listen 1");
+          this.listen();
+
           myButton.classList.add("wrong");
 
           lw.moveQuestionBackwards();
@@ -127,7 +133,6 @@ export class PracticeModePage {
           this.showRepeat(tag, mode);
         }
         else {
-          this.listen();
           myButton.classList.remove("wrong");
           myButton.style.opacity = "0.3";
         }
@@ -138,6 +143,7 @@ export class PracticeModePage {
 
     var wordsFilteredByTag = lw.allWordsFilteredByTag(tag);
 
+    this.arrOptionButtonsSorted = [];
     this.arrOptionButtons = [];
 
     questionObj = lw.question(tag, mode, false);
@@ -148,13 +154,11 @@ export class PracticeModePage {
     {
       correctAnswerID = lw.answer(tag, mode);
 
+      console.log("listen 2");
       this.listen();
 
-      var arrOptionButtons = document.getElementsByClassName("optionBtn");
+      var arrOptionButtonsSorted = document.getElementsByClassName("optionBtn");
       var arrOptions = lw.getAnswerOptions(tag, mode);
-
-      console.log("arrOptions:");
-      console.log(arrOptions);
   
       var numberOfOptions = 2;
       if(arrOptions.length < numberOfOptions)
@@ -166,6 +170,7 @@ export class PracticeModePage {
           numberOfOptions = arrOptions.length;
         }
       }      
+
       for (var i = 0; i < numberOfOptions; i++) {
 
         if(arrOptions[i])
@@ -173,14 +178,26 @@ export class PracticeModePage {
 
           var card = "<div class=answer><div class=answerText>" + arrOptions[i]['character'] + "</div></div>";
 
-          this.arrOptionButtons.push({id: arrOptions[i]['_id'] + "_character", content: card}); 
+          this.arrOptionButtonsSorted.push({id: arrOptions[i]['_id'] + "_character", content: card}); 
 
           var card = "<div class=answer><div class=answerText>" + arrOptions[i]['example'] + "</div></div>";
 
-          this.arrOptionButtons.push({id: arrOptions[i]['_id'] + "_example", content: card}); 
+          this.arrOptionButtonsSorted.push({id: arrOptions[i]['_id'] + "_example", content: card}); 
 
         }
       }
+
+
+      //randomize answer options
+      var arrOptionNumbers = [0, 1, 2, 3];
+      lw.shuffle(arrOptionNumbers);
+
+      for (var i = 0; i < this.arrOptionButtonsSorted.length; i++) {
+
+        var optionNr = arrOptionNumbers[i];
+        this.arrOptionButtons[i] = this.arrOptionButtonsSorted[optionNr];
+      }
+
 
     }
     else
