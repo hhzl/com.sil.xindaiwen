@@ -6,11 +6,13 @@ declare var BoxOfQuestions: any;
 declare var LWdb: any;
 declare var LWutils: any;
 var lw = BoxOfQuestions(LWdb('lw-storage'));
-var correctAnswer = "";
+var correctAnswerID = "";
 var mode = "";
 var questionObj = null;
 var tag = "";
 var wordNumber = 1;
+var characterCorrect = false;
+var exampleCorrect = false;
 /**
  * Generated class for the PracticeModePage page.
  *
@@ -72,22 +74,36 @@ export class PracticeModePage {
       clickedOption.buttonColor = '#FFFFFF'
     }
 
-    var wordID = clickedOption.currentTarget.id;
+    var buttonID = clickedOption.currentTarget.id;
+    var wordID = buttonID.replace("_character", "");
+    wordID = wordID.replace("_example", "");
 
     var w = lw.findID(wordID);
     var clickedWord = lw.getWord(w);
-    var myButton = document.getElementById(wordID);
+    var myButton = document.getElementById(buttonID);
 
     var correct = false;
     if(myButton)
     {
-      console.log("clicked word: " + clickedWord._id);
-      if(clickedWord._id == correctAnswer)
+      if(clickedWord._id == correctAnswerID)
       {
           correct = true;
 
           myButton.classList.add("correct");
-          lw.moveQuestionForward();
+
+          if(buttonID.indexOf("character") > 0)
+          {
+            console.log("characterCorrect");
+
+            characterCorrect = true;
+          }
+
+          if(buttonID.indexOf("example") > 0)
+          {
+            console.log("exampleCorrect");
+
+            exampleCorrect = true;
+          }
       }
       else {
           myButton.classList.add("wrong");
@@ -96,10 +112,18 @@ export class PracticeModePage {
       }
       
       setTimeout(()=>{  
-        if(correct)
+        if(characterCorrect && exampleCorrect)
         {
-          console.log("removeCorrect " + wordID);
-          myButton.classList.remove("correct");
+          lw.moveQuestionForward();
+          characterCorrect = false;
+          exampleCorrect = false;
+
+          var buttonCharacter = document.getElementById(wordID + "_character");
+          var buttonExample = document.getElementById(wordID + "_example");
+
+          buttonCharacter.classList.remove("correct");
+          buttonExample.classList.remove("correct");
+          
           this.showRepeat(tag, mode);
         }
         else {
@@ -122,7 +146,7 @@ export class PracticeModePage {
     
     if(typeof questionObj !== 'undefined')
     {
-      correctAnswer = lw.answer(tag, mode);
+      correctAnswerID = lw.answer(tag, mode);
 
       this.listen();
 
@@ -132,11 +156,11 @@ export class PracticeModePage {
       console.log("arrOptions:");
       console.log(arrOptions);
   
-      var numberOfOptions = 4;
+      var numberOfOptions = 2;
       if(arrOptions.length < numberOfOptions)
       {
-        if(wordNumber > 4) {
-          numberOfOptions = arrOptions.length - (wordNumber + 4);
+        if(wordNumber > numberOfOptions) {
+          numberOfOptions = arrOptions.length - (wordNumber + numberOfOptions);
         }
         else {
           numberOfOptions = arrOptions.length;
@@ -149,7 +173,12 @@ export class PracticeModePage {
 
           var card = "<div class=answer><div class=answerText>" + arrOptions[i]['character'] + "</div></div>";
 
-          this.arrOptionButtons.push({id: arrOptions[i]['_id'], content: card}); 
+          this.arrOptionButtons.push({id: arrOptions[i]['_id'] + "_character", content: card}); 
+
+          var card = "<div class=answer><div class=answerText>" + arrOptions[i]['example'] + "</div></div>";
+
+          this.arrOptionButtons.push({id: arrOptions[i]['_id'] + "_example", content: card}); 
+
         }
       }
 

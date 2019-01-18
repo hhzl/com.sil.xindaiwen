@@ -333,7 +333,7 @@ var LWdb = function(name) {
 			if (value===null) {
 				// define default value for settings
 				value = { "delay": 8640000,
-					"numberOfOptions": 4,
+					"numberOfOptions": 2,
 					"numberOfLearnOptions": 2,
 					"factorForDelayValue": [1,2,3,7,45,90,360,1000],
 					"defaultInitialStepValue" : _defaultInitialStepValue,
