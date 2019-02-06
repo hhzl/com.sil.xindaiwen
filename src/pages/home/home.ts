@@ -89,7 +89,9 @@ export class HomePage {
     {
       console.log(data);
       var lw = BoxOfQuestions(LWdb('lw-storage'));
-      lw.db.loadIntoStorage(data);
+      var nr = 1;
+      nr = lw.db.loadIntoStorage(nr, data, "character");
+      lw.db.loadIntoStorage(nr, data, "example");
       this.displayLessons();
     });
   }

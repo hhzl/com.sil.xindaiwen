@@ -169,8 +169,8 @@ var LWdb = function(name) {
 
 		putWord : function(aWord) {
 
-			if(!aWord._id){
-				throw "_id is required in a word";
+			if(!aWord.nr){
+				throw "nr is required in a word";
 			}
 
 			if(!aWord.hasOwnProperty("step")){
@@ -182,7 +182,7 @@ var LWdb = function(name) {
 			}
 
 			// get storage key
-			var storageKey = _wdKeyFor(aWord._id);
+			var storageKey = _wdKeyFor(aWord.nr);
 			// try to get the word to check if it already exists
 			var value = localStorage.getItem(storageKey);
 
@@ -245,7 +245,7 @@ var LWdb = function(name) {
 
 				for(var i = 0; i < n; i++){
 					aWord = theWords[i];
-	  key = this.putWord(aWord);
+	  				key = this.putWord(aWord);
 				}
 
 				_invalidateIndex();
@@ -256,22 +256,26 @@ var LWdb = function(name) {
 
 
 
-		loadIntoStorage : function (datatable) {
+		loadIntoStorage : function (nr, datatable, wordtype) {
 
 			var wordlist = new Array();
-			var id = 1;
-			var i;
-			for (i in datatable) {
+			var id = 0;
+			for (var i in datatable) {
 				wordlist[i] = {};
-				wordlist[i] = datatable[i];
+				wordlist[i]['nr'] = nr;
 				wordlist[i]['_id'] = +id + +i;
+				wordlist[i]['word'] = datatable[i][wordtype];
+				wordlist[i]['tags'] = datatable[i]['tags'];
 				wordlist[i]['date'] = 0;
 				wordlist[i]['step'] = 0;
 				wordlist[i]['point'] = 0;
 				wordlist[i]['queried'] = 0;
-				wordlist[i]['importedFromAPKG'] = 0;	
+				wordlist[i]['importedFromAPKG'] = 0;
 				this.importFrom(wordlist);
+				nr++;
 			}
+
+			return nr;
 		},
 
 		loadWords : function(theWords) {
