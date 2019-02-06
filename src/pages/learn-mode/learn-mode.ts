@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http } from '@angular/http';
+import 'rxjs/Rx';
 
 declare var BoxOfQuestions: any;
 declare var LWdb: any;
 declare var LWutils: any;
 var lw = BoxOfQuestions(LWdb('lw-storage'));
+var arrOptions;
 var wordNumber;
 /**
  * Generated class for the LearnModePage page.
@@ -20,36 +23,43 @@ var wordNumber;
 })
 export class LearnModePage {
 
+  arrOptions: any;
   arrWords: any;
   lessonName: any; 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http) {
   }
 
   ionViewDidLoad() {
+    arrOptions = [];
     wordNumber = 1;
     console.log('ionViewDidLoad LearnModePage');
     var tag = this.navParams.get('tag');
     this.lessonName = tag;
-    //lw = BoxOfQuestions(LWdb('lw-storage'));
-    this.showRepeat(tag);
+    
+    this.http.get('assets/lessonmaterial/lessons.json')
+    .map((res) => res.json())
+    .subscribe(data =>
+    {
+      data = data.filter(res => res.tags === tag)
+      arrOptions = data;
+      this.showRepeat(tag);
+    });    
   }
 
   listen(clickedOption) : void
   {
-    var wordID = clickedOption.currentTarget.id;
-    var clickedWord = lw.getWord(wordID);
+    var clickedWord = clickedOption.currentTarget.id;
     clickedOption.currentTarget.classList.add("listen");
     
     //doesn't work with ionic live-reload https://github.com/ionic-team/ionic-cli/issues/287
-    var fileNumber = clickedWord._id;
-    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + fileNumber + "-char.mp3");
+    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-char.mp3");
 
     hasPlayedChar.addEventListener("ended", function() {
-      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + fileNumber + "-word.mp3");
+      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-word.mp3");
 
       hasPlayedWord.addEventListener("ended", function() {
-        var myButton = document.getElementById(wordID);
+        var myButton = document.getElementById(clickedWord);
         myButton.classList.remove("listen");
       });
     });
@@ -76,13 +86,10 @@ export class LearnModePage {
 
   showRepeat(tag)
   {
-    //var tag = LWutils.getParameterByName("tag", window.location);
-    var wordsFilteredByTag = lw.allWordsFilteredByTag(tag);
-    var numberOfOptions = (lw.db.getSettings()).numberOfLearnOptions;
+    var numberOfOptions = 2; //(lw.db.getSettings()).numberOfLearnOptions;
     var nrOptionsToDisplay = numberOfOptions;
 
-    var arrOptions = lw.getLearnCards(tag);
-
+    //var arrOptions = lw.getLearnCards(tag);
     this.arrWords = [];
 
     if(arrOptions.length <= numberOfOptions)
@@ -95,9 +102,11 @@ export class LearnModePage {
       }
     }
     
+
     for (var i = 0; i < nrOptionsToDisplay; i++) {
       var w = wordNumber + i - 1;
-      var questionObj = lw.getWord(w);
+      var questionObj = arrOptions[w];
+
       if(questionObj != null)
       {
             var card = "<div class=characterContainer><div class=character>" + questionObj.character + "</div></div>";
@@ -106,7 +115,7 @@ export class LearnModePage {
             card += "<div class=exampleText>" + questionObj.example + "</div>";
             card += "</div>";
 
-            this.arrWords.push({id: w.toString(), content: card}); 
+            this.arrWords.push({id: questionObj._id, content: card}); 
       }
     }
 
