@@ -265,6 +265,7 @@ var LWdb = function(name) {
 				wordlist[i]['nr'] = nr;
 				wordlist[i]['_id'] = +id + +i;
 				wordlist[i]['word'] = datatable[i][wordtype];
+				wordlist[i]['type'] = wordtype;
 				wordlist[i]['tags'] = datatable[i]['tags'];
 				wordlist[i]['date'] = 0;
 				wordlist[i]['step'] = 0;
@@ -337,7 +338,7 @@ var LWdb = function(name) {
 			if (value===null) {
 				// define default value for settings
 				value = { "delay": 8640000,
-					"numberOfOptions": 2,
+					"numberOfOptions": 4,
 					"numberOfLearnOptions": 2,
 					"factorForDelayValue": [1,2,3,7,45,90,360,1000],
 					"defaultInitialStepValue" : _defaultInitialStepValue,

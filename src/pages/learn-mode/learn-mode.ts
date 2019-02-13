@@ -53,14 +53,17 @@ export class LearnModePage {
     clickedOption.currentTarget.classList.add("listen");
     
     //doesn't work with ionic live-reload https://github.com/ionic-team/ionic-cli/issues/287
-    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-char.mp3");
+    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-character.mp3");
 
     hasPlayedChar.addEventListener("ended", function() {
-      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-word.mp3");
+      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-example.mp3");
 
       hasPlayedWord.addEventListener("ended", function() {
         var myButton = document.getElementById(clickedWord);
-        myButton.classList.remove("listen");
+        if(myButton !== null)
+        {
+          myButton.classList.remove("listen");
+        }
       });
     });
   }

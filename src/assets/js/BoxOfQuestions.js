@@ -127,7 +127,7 @@ function BoxOfQuestions(db) {
 
 
 
-		question : function(tag, mode, random){
+		question : function(tag, mode){
 			// gives back a question to ask
 			console.log("question mode: " + mode);
 			if (!_question) {
@@ -146,12 +146,7 @@ function BoxOfQuestions(db) {
 				}
 
 				if (wds !== null) {
-					if(random == true) {
-						_question = this.chooseRandomObject(wds);
-					}
-					else {
-						_question = wds[0];
-					}
+					_question = this.chooseRandomObject(wds);
 				}
 			}
 			return _question;
@@ -166,7 +161,7 @@ function BoxOfQuestions(db) {
 
 		answer :function(tag, mode){
 			console.log("answer mode: " + mode);
-			return (this.question(tag, mode))._id;
+			return (this.question(tag, mode)).nr;
 		},
 
 
@@ -357,7 +352,7 @@ function BoxOfQuestions(db) {
 		},
 
 
-		getAnswerOptions : function(tag, mode){
+		getAnswerOptions : function(tag, mode, type){
 			// simple implementation : choose from all available words
 			// As we use ECMA5script findIndex is not available.
 			// We have to duplicate the effort in keeping an array of id
@@ -376,7 +371,7 @@ function BoxOfQuestions(db) {
 				var idsOfOptions = [];
 				var samePronunciations = [];
 
-				idsOfOptions.push(q._id);
+				idsOfOptions.push(q.nr);
 				if(q.pronunciation){
 					if(q.pronunciation.trim().length > 0){
 						samePronunciations.push(q.pronunciation.trim().toLowerCase());
@@ -386,13 +381,15 @@ function BoxOfQuestions(db) {
 				var anOption;
 				// var allWords =  this.db.allWords();
 
+				var wordsFilteredByType = this.wordsByType(_allWordsFilteredByTag, type);
+
 				var countTries = 0;
 				do {
 					// choose option from all words.
-					anOption = this.chooseRandomObject(_allWordsFilteredByTag);
+					anOption = this.chooseRandomObject(wordsFilteredByType);
 
 					var answerPossible = false;
-					if(idsOfOptions.indexOf(anOption._id) == -1){
+					if(idsOfOptions.indexOf(anOption.nr) == -1){
 						answerPossible = true;
 					}
 					if(anOption.pronunciation) {
@@ -403,7 +400,7 @@ function BoxOfQuestions(db) {
 
 					if (answerPossible) {
 						// the new option is not included yet
-						idsOfOptions.push(anOption._id);
+						idsOfOptions.push(anOption.nr);
 
 						if(anOption.pronunciation) {
 							if(anOption.pronunciation.trim().length > 0){
@@ -514,6 +511,20 @@ function BoxOfQuestions(db) {
 
 			return (wordsToFilter).filter(hasThisTag);
 		},
+
+		wordsByType : function(wordsToFilter, type){
+
+			function hasThisType(aWord) {
+				return (aWord.type == type);
+			}
+
+			if(type == "")
+			{
+				return wordsToFilter;
+			}
+			return (wordsToFilter).filter(hasThisType);
+		},		
+
 
 		wordsToPractice : function(tag, again){
 

@@ -27,6 +27,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+    /*
     if(this.dataIsImported())
     {
       this.displayLessons();
@@ -35,6 +36,8 @@ export class HomePage {
     {
       this.importLessons();
     }
+    */
+    this.importLessons();
   }  
 
   displayLessons() {
@@ -82,6 +85,7 @@ export class HomePage {
 
   importLessons()
   {
+    localStorage.clear();
     console.log("import lessons");
     this.http.get('assets/lessonmaterial/lessons.json')
     .map(res => res.json())
