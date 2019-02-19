@@ -17,7 +17,10 @@
       <div id="learnWords2-area">
         <div id="optionsForAnswers">
               <div class="optionCellLearn left" *ngFor="let word of arrWords"> 
-                <button ion-button id="{{word.id}}" type="button" class="optionBtn" (click)="listen($event)" [innerHTML]="word.content"></button>
+                <div class="optionBtn" ion-button>
+                    <button id="{{word.id}}" class=characterContainer type="button" (click)="listen($event, 'character')" [innerHTML]="word.contentCharacter"></button>
+                  <button id="{{word.id}}" class=example type="button" (click)="listen($event, 'example')" [innerHTML]="word.contentExample"></button>
+                </div>
               </div>
               <div id=back>
                   <button ion-button large color="light" (click)="back(lessonName)">

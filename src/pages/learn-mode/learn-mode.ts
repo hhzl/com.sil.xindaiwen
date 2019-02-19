@@ -47,24 +47,20 @@ export class LearnModePage {
     });    
   }
 
-  listen(clickedOption) : void
+  listen(clickedOption, type) : void
   {
     var clickedWord = clickedOption.currentTarget.id;
     clickedOption.currentTarget.classList.add("listen");
     
     //doesn't work with ionic live-reload https://github.com/ionic-team/ionic-cli/issues/287
-    var hasPlayedChar = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-character.mp3");
+    var hasPlayed = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-" + type + ".mp3");
 
-    hasPlayedChar.addEventListener("ended", function() {
-      var hasPlayedWord = LWutils.playAudio("assets/lessonmaterial/audio/" + clickedWord + "-example.mp3");
-
-      hasPlayedWord.addEventListener("ended", function() {
-        var myButton = document.getElementById(clickedWord);
-        if(myButton !== null)
-        {
-          myButton.classList.remove("listen");
-        }
-      });
+    hasPlayed.addEventListener("ended", function() {
+      var myButton = document.getElementById(clickedWord);
+      if(myButton !== null)
+      {
+        myButton.classList.remove("listen");
+      }
     });
   }
 
@@ -112,13 +108,11 @@ export class LearnModePage {
 
       if(questionObj != null)
       {
-            var card = "<div class=characterContainer><div class=character>" + questionObj.character + "</div></div>";
-            card += "<div class=example>";
-            card += "<div class=exampleImage><div><img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'></div></div>";
-            card += "<div class=exampleText>" + questionObj.example + "</div>";
-            card += "</div>";
+            var cardCharacter = "<div class=character>" + questionObj.character + "</div>";
+            var cardExample = "<div class=exampleImage><div><img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'></div></div>";
+            cardExample += "<div class=exampleText>" + questionObj.example + "</div>";
 
-            this.arrWords.push({id: questionObj._id, content: card}); 
+            this.arrWords.push({id: questionObj._id, contentCharacter: cardCharacter, contentExample: cardExample }); 
       }
     }
 
