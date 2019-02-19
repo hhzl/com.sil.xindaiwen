@@ -128,20 +128,19 @@ export class PracticeModePage {
     this.arrOptionButtons = [];
 
     questionObj = lw.question(tag, mode, "");
-
-    console.log(tag + "#" + mode);
     
     if(typeof questionObj !== 'undefined')
     {
-      correctAnswerID = lw.answer(tag, mode);
+      //correctAnswerID = lw.answer(tag, mode);
+      correctAnswerID = questionObj['nr'];
 
-      console.log("listen 2");
+      console.log("# correctAnswerID: " + correctAnswerID);
       this.listen();
 
       var arrOptionButtonsSorted = document.getElementsByClassName("optionBtn");
       var arrOptions = lw.getAnswerOptions(tag, mode, questionObj['type']);
   
-      var numberOfOptions = 4;
+      var numberOfOptions = 2;
       if(arrOptions.length < numberOfOptions)
       {
         if(wordNumber > numberOfOptions) {
@@ -152,14 +151,28 @@ export class PracticeModePage {
         }
       }      
 
+      console.log("numberOfOptions: " + numberOfOptions);
+      console.log(wordsFilteredByTag);
       for (var i = 0; i < numberOfOptions; i++) {
 
         if(arrOptions[i])
         {
 
-          var card = "<div class=answer><div class=answerText>" + arrOptions[i]['word'] + "</div></div>";
+          //var card = "<div class=answer><div class=answerText>" + arrOptions[i]['word'] + "</div></div>";
+          //this.arrOptionButtonsSorted.push({id: arrOptions[i]['nr'], content: card}); 
 
-          this.arrOptionButtonsSorted.push({id: arrOptions[i]['nr'], content: card}); 
+
+          var words = wordsFilteredByTag.filter(function (option) { return option._id == arrOptions[i]['_id']});
+
+          console.log(words);
+          var card = "<div class=answer><div class=answerText>" + words[0]['word'] + "</div></div>";
+
+          this.arrOptionButtonsSorted.push({id: words[0]['nr'], content: card}); 
+          
+          var card = "<div class=answer><div class=answerText>" + words[1]['word'] + "</div></div>";
+
+          this.arrOptionButtonsSorted.push({id: words[1]['nr'], content: card}); 
+          
         }
       }
 
