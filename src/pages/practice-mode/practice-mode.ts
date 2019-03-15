@@ -117,7 +117,7 @@ export class PracticeModePage {
           myButton.classList.remove("wrong");
           myButton.style.opacity = "0.3";
         }
-      }, 2000);
+      }, 800);
     }
 }
   showRepeat(tag, mode) {
