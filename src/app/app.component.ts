@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
-import { Platform } from 'ionic-angular';
+import { Nav, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { HomePage } from '../pages/home/home';
 
@@ -11,6 +11,10 @@ declare var LWdb: any;
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
+
+  pages: Array<{title: string, page: string}>;
+
   rootPage:any = HomePage;
 
   constructor(public platform: Platform, public http: Http) {
@@ -23,7 +27,13 @@ export class MyApp {
     this.platform.ready().then(() => {
       console.log("initiallizing app");
 
+      this.pages = [
+        { title: '功课', page: 'HomePage' },
+        { title: '关于', page: 'AboutPage' },
+      ];      
     });
-  }  
+  }
+  
+
 }
 

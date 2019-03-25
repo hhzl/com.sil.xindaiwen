@@ -1,10 +1,14 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-toolbar>
+    <ion-buttons slot="end">
+        <span class="iconify" data-icon="ion:help-circle-outline" data-inline="false"></span>
+      <button ion-button (click)="navigateToAboutPage()" style="float: left; top: 10px; padding: 10px; width: 100%;"> 
+        <ion-icon name="help-circle-outline" style="font-size: 25px;"></ion-icon>
+      </button>
+    </ion-buttons>
+    
     <ion-title>学习新傣文<br><span class=daiscript>ᦣᧄᧈ ᦵᦣᧃ ᦷᦎ ᦺᦑ ᦺᦖᧈ</span></ion-title>
-  </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -15,3 +19,5 @@
     </button>
 </div>
 </ion-content>
+
+<script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>

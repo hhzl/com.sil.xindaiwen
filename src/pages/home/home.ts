@@ -20,6 +20,10 @@ export class HomePage {
     
   }
 
+  navigateToAboutPage() : void {
+    this.navCtrl.push('AboutPage');
+  }  
+
   navigateToChooseMode(tag) : void {
     this.navCtrl.push('ChooseModePage', {
       lesson: tag
@@ -28,17 +32,8 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    /*
-    if(this.dataIsImported())
-    {
-      this.displayLessons();
-    }
-    else
-    {
-      this.importLessons();
-    }
-    */
-   this.platform.ready().then(() => {
+
+    this.platform.ready().then(() => {
       this.importLessons();
     });
   }  
@@ -56,10 +51,6 @@ export class HomePage {
     console.log("displayLessons");
     console.log("wordlist:");
     
-    for(var i=0;i<wordlist.length;i++) {
-      console.log(wordlist[i]._id + " " + wordlist[i].tags);
-    }
-
     var arrLesson = [];
     this.lessonButtons = [];
     
