@@ -48,10 +48,11 @@ body {
   }
   .answerText {
     color: #000000;
-    font-size: 10vh;
+    font-size: 8vh;
     display: table-cell;
     vertical-align: middle;
     font-family: 'Nokyung';
+    white-space: normal;
   }
   #chooseButtons {
     display: flex;
@@ -126,7 +127,7 @@ body {
 
   .character {
     color: #000000;
-    font-size: 20vh;
+    font-size: 7vh;
     vertical-align: middle;
     font-family: 'Nokyung';
   }
@@ -145,7 +146,7 @@ body {
 
   .exampleImage {
     display: table;
-    height: 80%;
+    /* height: 80%; */
     margin: 0 auto;
   }
   .exampleImage > div {
@@ -155,8 +156,10 @@ body {
   .exampleText {
     color: #000000;
     /* padding-bottom: 5px; */
-    height: 6vh; 
+    /* height: 6vh; */
     font-size: 5vh;
+    margin-top: 5vh;
+    white-space: normal;
     font-family: 'Nokyung';
   }
 

@@ -108,7 +108,8 @@ export class LearnModePage {
 
       if(questionObj != null)
       {
-            var cardCharacter = "<div class=character>" + questionObj.character + "</div>";
+            var cardCharacter = "<div class='character'>" + questionObj.character + "</div>";            
+          
             var cardExample = "<div class=exampleImage><div><img class=imgAnswer src='assets/lessonmaterial/images/" + questionObj._id + ".png'></div></div>";
             cardExample += "<div class=exampleText>" + questionObj.example + "</div>";
 
