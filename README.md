@@ -11,6 +11,7 @@ Add folder called 'lessonmaterial' with data in
 It has to contain the subfolders
 - audio
 - images
+
 And the files
 - lessoninfo.json
 - lessons.json
