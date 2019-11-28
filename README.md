@@ -5,7 +5,7 @@ App for learning the new Dai script based on TeachMeWords
     cd com.sil.xindaiwen
     npm install
     
-Add folder called 'lessonmaterial' with data in 
+Add a folder called 'lessonmaterial' with data in 
     src/assets
 
 It has to contain the subfolders
@@ -17,6 +17,7 @@ And the files
 - lessons.json
 
 Then
+
     ionic serve
     
 
