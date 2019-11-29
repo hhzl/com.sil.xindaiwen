@@ -21,7 +21,7 @@ Then
     ionic serve
 
 # Ionic note
-This project uses ionic 3 style navigation with NavController. In ionic 4 this is deprecated in ionic 4 but still works.
+This project uses ionic 3 style navigation with NavController. This is deprecated in ionic 4 but still works.
     
     
 
